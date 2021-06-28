@@ -3,17 +3,21 @@
   <body>
     <div class="card">
       <h1 class="card__title">Welcome</h1>
-      <h1 class="card__subtitle">{{ userInfos.name }} {{ userInfos.lastName }}</h1>
+      <h1 class="card__subtitle">
+        {{ userInfos.name }} {{ userInfos.lastName }}
+      </h1>
       <div class="form-row" v-if="userInfos.activationDone == true">
-        <button v-if="userInfos.userserviceid == 1" class="button">
+        <button v-if="userInfos.userServiceId == 1" class="button">
           <span>Messaging</span>
         </button>
-        <button v-if="userInfos.userserviceid == 2" class="button">
+        <button v-if="userInfos.userServiceId == 2" class="button">
           <span>Documentation</span>
         </button>
-        <div class="form-row" v-else>
-          <p>You must activate your account before you can access the application's features. <span class="card__action">Resend the email activation.</span></p>
-        </div>
+      </div>
+      <div class="form-row mt-3 center" v-else>
+        You must activate your account before you can access the application's
+        features.<br />
+        <span class="card__action">Resend the email activation.</span>
       </div>
     </div>
   </body>
@@ -28,21 +32,8 @@ export default {
   components: {
     Navbar,
   },
-  data: function () {
-    return {
-      email: "",
-      name: "",
-      lastname: "",
-      phonenumber: "",
-      adress: "",
-      city: "",
-      country: "",
-      userserviceid: "",
-      password: "",
-    };
-  },
   mounted: function () {
-    if (this.$store.state.user.userId == -1) {
+    if (this.$store.state.user.userId == -1 && this.$store.state.userInfos.userId) {
       this.$router.push("/");
       return;
     }
@@ -78,6 +69,8 @@ body {
 .card__subtitle {
   text-align: center;
   color: #666;
-  font-weight: 500;
+}
+.center {
+  text-align: center;
 }
 </style>

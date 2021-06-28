@@ -62,7 +62,7 @@ export default {
   color: #ececec;
 }
 .button--disabled:hover {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
   background: #cecece;
 }
 </style>

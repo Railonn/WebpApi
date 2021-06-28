@@ -48,6 +48,13 @@ const store = createStore({
         },
         userInfos: function (state, userInfos) {
             state.userInfos = userInfos;
+        },
+        logout: function (state) {
+            state.user = {
+                userId: -1,
+            }
+            state.userInfos = '';
+            localStorage.removeItem('user');
         }
     },
     actions: {
@@ -83,12 +90,11 @@ const store = createStore({
             });
         },
         getUserInfos: ({ commit }) => {
-            instance.get("/user")
+            instance.get("/user/" + user)
                 .then(function (response) {
-                    commit('userInfos', response.data[0]);
-                    console.log(response.data[0]);
+                    commit('userInfos', response.data);
                 })
-                .catch(function () { 
+                .catch(function () {
 
                 });
         }

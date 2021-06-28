@@ -73,8 +73,8 @@
         id="services-select"
       >
         <option selected="selected" disabled>Select your Service</option>
-        <option value=1>Messaging</option>
-        <option value=2>Documentation</option>
+        <option value="1">Messaging</option>
+        <option value="2">Documentation</option>
       </select>
     </div>
     <div class="form-row">
@@ -93,13 +93,23 @@
       Email address already in use
     </div>
     <div class="form-row">
-      <button @click="login()" class="button" :class="{'button--disabled' : !validateFields}" v-if="mode == 'login'">
+      <button
+        @click="login()"
+        class="button"
+        :class="{ 'button--disabled': !validateFields }"
+        v-if="mode == 'login'"
+      >
         <span v-if="status == 'loading'">Connection in progress...</span>
-        <span v-else>Connexion</span>
+        <span v-else>Connection</span>
       </button>
-      <button @click="createAccount()" class="button" :class="{'button--disabled' : !validateFields}" v-else>
+      <button
+        @click="createAccount()"
+        class="button"
+        :class="{ 'button--disabled': !validateFields }"
+        v-else
+      >
         <span v-if="status == 'loading'">Creation in progress...</span>
-        <span v-else>Créer mon compte</span>
+        <span v-else>Create account</span>
       </button>
     </div>
   </div>
@@ -151,7 +161,7 @@ export default {
       }
     },
     // Accés à la valeur de status dans le state
-    ...mapState(['status'])
+    ...mapState(["status"]),
   },
   methods: {
     // Permet de changer entre le formulaire connexion et inscription, utilisation que d'un seul composant
@@ -169,44 +179,66 @@ export default {
       }
     },
     login: function () {
-      const self = this;
-      this.$store
-        .dispatch("login", {
-          email: this.email,
-          password: this.password,
-        })
-        .then(function () {
-          self.$router.push('/account');
-        }),
-        function (error) {
-          console.log(error);
-        };
+      if (this.email != "" && this.password != "") {
+        const self = this;
+        this.$store
+          .dispatch("login", {
+            email: this.email,
+            password: this.password,
+          })
+          .then(function () {
+            self.$router.push("/account");
+          }),
+          function (error) {
+            console.log(error);
+          };
+      }
     },
     createAccount: function () {
-      const self = this;
-      console.log(this.email, this.name, this.lastname, this.phonenumber, this.adress, this.city, this.country, this.userserviceid, this.password);
-      // Envoie les informations vers le store pour envoyer une requête au backend
-      this.$store
-        .dispatch("createAccount", {
-          name: this.name,
-          lastname: this.lastname,
-          password: this.password,
-          email: this.email,
-          phonenumber: this.phonenumber,
-          adress: this.adress,
-          city: this.city,
-          country: this.country,
-          activationDone: false,
-          userserviceid: this.userserviceid,
-        })
-        .then(function () {
-          // Connexion direct après enregistrement
-          self.login();
-        }),
-        function (error) {
-          console.log(error);
-        };
+      if (
+        this.email != "" &&
+        this.name != "" &&
+        this.lastname != "" &&
+        this.phonenumber != "" &&
+        this.adress != "" &&
+        this.city != "" &&
+        this.country != "" &&
+        this.userserviceid != "" &&
+        this.password != ""
+      ) {
+        const self = this;
+        // Envoie les informations vers le store pour envoyer une requête au backend
+        this.$store
+          .dispatch("createAccount", {
+            name: this.name,
+            lastname: this.lastname,
+            password: this.password,
+            email: this.email,
+            phonenumber: this.phonenumber,
+            adress: this.adress,
+            city: this.city,
+            country: this.country,
+            activationDone: false,
+            userserviceid: this.userserviceid,
+          })
+          .then(function () {
+            // Connexion direct après enregistrement
+            self.login();
+          }),
+          function (error) {
+            console.log(error);
+          };
+      }
     },
+  },
+  mounted: function () {
+    if (
+      this.$store.state.user.userId !== -1 &&
+      !this.$store.state.userInfos.userId
+    ) {
+      this.$router.push("/account");
+      return;
+    }
   },
 };
 </script>
