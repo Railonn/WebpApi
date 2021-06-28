@@ -3,13 +3,18 @@
   <body>
     <div class="card">
       <h1 class="card__title">Welcome</h1>
-      <h1>{{ userInfos.name }} {{ userInfos.lastName }}</h1>
-      <button v-if="userInfos.userserviceid == 1" class="button">
-        <span>Messaging</span>
-      </button>
-      <button v-if="userInfos.userserviceid == 2" class="button">
-        <span>Documentation</span>
-      </button>
+      <h1 class="card__subtitle">{{ userInfos.name }} {{ userInfos.lastName }}</h1>
+      <div class="form-row" v-if="userInfos.activationDone == true">
+        <button v-if="userInfos.userserviceid == 1" class="button">
+          <span>Messaging</span>
+        </button>
+        <button v-if="userInfos.userserviceid == 2" class="button">
+          <span>Documentation</span>
+        </button>
+        <div class="form-row" v-else>
+          <p>You must activate your account before you can access the application's features. <span class="card__action">Resend the email activation.</span></p>
+        </div>
+      </div>
     </div>
   </body>
 </template>
@@ -25,7 +30,6 @@ export default {
   },
   data: function () {
     return {
-      mode: "login",
       email: "",
       name: "",
       lastname: "",
@@ -39,13 +43,13 @@ export default {
   },
   mounted: function () {
     if (this.$store.state.user.userId == -1) {
-      this.$router.push('/');
+      this.$router.push("/");
       return;
     }
-    this.$store.dispatch('getUserInfos');
+    this.$store.dispatch("getUserInfos");
   },
   computed: {
-    ...mapState(['userInfos']),
+    ...mapState(["userInfos"]),
   },
 };
 </script>

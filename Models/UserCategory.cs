@@ -10,5 +10,6 @@ namespace WebApi.Models
         public int CategoryId { get; set; }
         [Required]
         public string CategoryName { get; set; }
+        public List<UserMessage> Messages { get; } = new List<UserMessage>();
     }
 }

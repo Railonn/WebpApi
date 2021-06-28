@@ -9,7 +9,5 @@ namespace WebApi.Models
         public int MessageId { get; set; }
         public DateTime Date { get; set; }
         public string Message { get; set; }
-        public int MessageUserId { get; set; }
-        public int MessageCategoryId { get; set; }
     }
 }

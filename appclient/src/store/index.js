@@ -48,8 +48,6 @@ const store = createStore({
         },
         userInfos: function (state, userInfos) {
             state.userInfos = userInfos;
-            console.log(userInfos);
-            console.log(userInfos[0].JSON.parse(Object));
         }
     },
     actions: {
@@ -87,8 +85,8 @@ const store = createStore({
         getUserInfos: ({ commit }) => {
             instance.get("/user")
                 .then(function (response) {
-                    commit('userInfos', response.data);
-                    console.log(response.data);
+                    commit('userInfos', response.data[0]);
+                    console.log(response.data[0]);
                 })
                 .catch(function () { 
 

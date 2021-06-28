@@ -38,9 +38,8 @@ namespace WebApi.Controllers
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
                 
-                return CreatedAtAction("GetUser", new {user.UserId}, user);
+                return CreatedAtAction("GetUser", new {id = user.UserId}, user);
             }
-
             return BadRequest("Something went wrong.");
         }
 
@@ -72,7 +71,6 @@ namespace WebApi.Controllers
             existUser.Adress = user.Adress;
             existUser.City = user.City;
             existUser.Country = user.Country;
-            existUser.ActivationDone = user.ActivationDone;
 
             // Implement the changes on the database level
             await _context.SaveChangesAsync();
