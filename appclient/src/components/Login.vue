@@ -131,6 +131,7 @@ export default {
       country: "",
       userserviceid: "",
       password: "",
+      userid: "",
     };
   },
   // Vérifications des champs avant de pouvoir activer les boutons
@@ -178,20 +179,24 @@ export default {
         $event.preventDefault();
       }
     },
-    login: function () {
+    login: async function () {
       if (this.email != "" && this.password != "") {
         const self = this;
-        this.$store
-          .dispatch("login", {
-            email: this.email,
-            password: this.password,
-          })
-          .then(function () {
-            self.$router.push("/account");
-          }),
-          function (error) {
-            console.log(error);
-          };
+        try {
+          await this.$store
+            .dispatch("login", {
+              email: this.email,
+              password: this.password,
+            })
+            .then(function () {
+              self.$router.push("/account");
+            }),
+            function (error) {
+              console.log(error);
+            };
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     createAccount: function () {

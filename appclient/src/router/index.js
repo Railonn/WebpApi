@@ -13,7 +13,7 @@ const routes = [
     path: '/account',
     name: 'account',
     component: Account,
-    props:true
+    props: true
   }
 ];
 

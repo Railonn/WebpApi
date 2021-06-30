@@ -33,14 +33,17 @@ export default {
     Navbar,
   },
   mounted: function () {
-    if (this.$store.state.user.userId == -1 && this.$store.state.userInfos.userId) {
+    if (
+      this.$store.state.user.userId == -1 &&
+      this.$store.state.userInfos.userId
+    ) {
       this.$router.push("/");
       return;
     }
-    this.$store.dispatch("getUserInfos");
+    this.$store.dispatch("getUserInfos", this.user);
   },
   computed: {
-    ...mapState(["userInfos"]),
+    ...mapState(["userInfos", "user"]),
   },
 };
 </script>

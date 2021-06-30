@@ -42,9 +42,9 @@ const store = createStore({
         setStatus: function (state, status) {
             state.status = status;
         },
-        logUser: function (state, user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            state.user = user;
+        logUser: async function (state, userId) {
+            localStorage.setItem('user', userId);
+            state.user = userId;
         },
         userInfos: function (state, userInfos) {
             state.userInfos = userInfos;
@@ -89,7 +89,7 @@ const store = createStore({
                     });
             });
         },
-        getUserInfos: ({ commit }) => {
+        getUserInfos: ({ commit }, user) => {
             instance.get("/user/" + user)
                 .then(function (response) {
                     commit('userInfos', response.data);
@@ -102,4 +102,4 @@ const store = createStore({
     }
 })
 
-export default store
+export default store;
