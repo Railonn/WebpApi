@@ -131,7 +131,6 @@ export default {
       country: "",
       userserviceid: "",
       password: "",
-      userid: "",
     };
   },
   // Vérifications des champs avant de pouvoir activer les boutons

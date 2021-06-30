@@ -10,7 +10,7 @@
         <button v-if="userInfos.userServiceId == 1" class="button">
           <span>Messaging</span>
         </button>
-        <button v-if="userInfos.userServiceId == 2" class="button">
+        <button class="button" v-else>
           <span>Documentation</span>
         </button>
       </div>
